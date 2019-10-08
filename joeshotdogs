@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+	h1{
+		font-family: Impact, Haettenschweiler, "Franklin Gothic Bold", "Arial Black", "sans-serif";
+		text-align: center;
+	}
+	body{
+		text-align: center;
+		font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+	}	
+		
+	
+</style>
+<title>HW4-2</title>
+
+<script language="javascript" type="text/javascript">
+	items = new Array;
+	items = {hotdog: 3.25, fries: 2.00, drinks: 2.50};
+	
+	order = new Array;
+	var numh = 0, numf = 0, numd = 0;
+	order = {numhotdog: numh, numfries: numf, numdrinks: numd};
+	
+</script>
+
+</head>
+
+<body>
+	<h1>JOE'S HOTDOG STAND</h1>
+	<form>
+		<input type="text" id="hotdogs" value="# hot dogs?">
+		<input type="text" id="fries" value="# french fries?">
+		<input type="text" id="drinks" value="# drinks?">
+		<input type="button" onclick="readIn()" value="Order">
+		
+		<p id="output"></p>
+	
+	
+	<script language="javascript" type="text/javascript">
+		function readIn(){
+			order.numhotdog = document.getElementById("hotdogs").value;
+			order.numfries = document.getElementById("fries").value;
+			order.numdrinks = document.getElementById("drinks").value;
+		
+			var subtotal = 0.00;
+			subtotal += items["hotdog"] * order.numhotdog;
+			subtotal += items["fries"] * order.numfries;
+			subtotal += items["drinks"] * order.numdrinks;
+			
+			var discount = 0.00;
+			var wasDis = false;
+			if(subtotal >= 20.00){
+				discount = subtotal * 0.10;
+				subtotal = subtotal - discount;
+				wasDis = true;
+				
+			}
+			
+			var tax = 0.00;
+			tax = subtotal * 0.0625;
+			
+			var total = subtotal + tax;
+			
+//			round
+			subtotal = Math.round(subtotal*100)/100;
+			total = Math.round(total*100)/100;
+			tax = Math.round(tax*100)/100;
+			discount = Math.round(discount*100)/100;
+			
+			
+			if(wasDis){
+				printMsg = "You ordered " + order.numhotdog + " hot dog(s), " + order.numfries + " order(s) of fries, and "
+					+ order.numdrinks + " drink(s). <br> The subtotal is $" + subtotal + " after your discount of $"
+				    + discount + ". Your tax was $" + tax + ", and your total is $" + total;
+			}
+			else{
+				printMsg = "You ordered " + order.numhotdog + " hot dog(s), " + order.numfries + " order(s) of fries, and "
+					+ order.numdrinks + " drink(s). <br> The subtotal is $" + subtotal + ". Your tax was $" + tax + ", and your total is $" + total;
+			}
+			
+			document.getElementById("output").innerHTML = printMsg;
+			
+		}
+	
+	</script>
+		
+	</form>
+	
+</body>
+</html>
