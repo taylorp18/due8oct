@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+<!--<link rel="stylesheet" type="text/css" href="hw4.css">-->
+<style>
+	h1{
+		font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+	}
+	body{
+		text-align: center;
+		font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+	}	
+	
+</style>
+<head>
+<meta charset="UTF-8">
+<title>HW4, Random Number</title>
+<script language="javascript" type="text/javascript">
+//		set up our data
+		quick_nums = new Array();
+	//	generate random numbers and add them to the array
+		for (i = 0; i < 5; i++)
+		{
+			rand_num = (Math.random() * 48) + 1;
+			rand_num = Math.round(rand_num);
+	//		catch if the number is a repeat
+			for(j = 0; j < i; j++){
+				if(i != 0){
+					while(rand_num == quick_nums[j]){
+						rand_num = (Math.random() * 48) + 1;
+						rand_num = Math.round(rand_num);
+					}
+				}
+			}
+			quick_nums.push(rand_num);
+		}
+	//	generate Lucky Ball number
+		lucky_ball = Math.round((Math.random() * 18) + 1);
+
+		//sort them (got the function a,b idea from w3schools)
+		quick_nums.sort(function(a,b){return a-b});
+</script>
+</head>
+
+<body>
+	<h1>Ready to play POWER BALL?</h1>
+	<form>
+		<input type="text" id="fiveNums" value="enter 5 numbers">
+		<input type="text" id="lucky" value="enter Lucky Ball #">
+		<input type="button" onclick="readIn()" value="Enter">
+
+	</form>
+	<script language="javascript" type="text/javascript">
+		
+		function readIn()
+		{
+			input = document.getElementById("fiveNums").value;
+			input_nums = new Array();
+//			assume user has input 5 numbers split by spaces
+			notEnd = true;
+			i = 0;
+			while(notEnd){
+				temp = "";
+//				parse get num until you hit a space
+				helper = 0; //avoids issue of it getting stuck on last number
+				while(helper != 2 && input.charAt(i) != " "){
+					temp += input.charAt(i);
+					helper++;
+					i++;
+				}
+				temp = parseInt(temp);
+				input_nums.push(temp);
+				i++;
+//				you've gotten all the numbers
+				if(input_nums.length == 5){
+					notEnd = false;
+				}
+			}
+//			sort input numbers
+			input_nums.sort(function(a,b){return a-b});
+			
+			
+//			get the lucky ball guess
+			lucky_in = document.getElementById("lucky").value;
+			lucky_in = parseInt(lucky_in);
+//			call the compare function to see if they won anything
+			compare(input_nums, lucky_in);
+		}
+		
+		function compare(input_nums, lucky_in){
+//			compare lucky ball number
+			same_lucky = false;
+			if (lucky_in == lucky_ball){
+				same_lucky = true;
+			}
+			
+//			compare matches for the 5 char array
+			matches = 0;
+			for(i = 0; i < 5; i++){
+				for(j = 0; j < 5; j++){
+					if(input_nums[i] == quick_nums[j]){
+						matches++;
+					}
+				}
+			}
+//			decide payout
+			payout = "$0 :( That's sad";
+			if(matches == 5){
+				if(same_lucky == true){
+					payout = "$7,000 a WEEK for LIFE!";
+				}
+				else{
+					payout = "$25,000 a YEAR for LIFE!";
+				}
+			}
+			else if(matches == 4){
+				if(same_lucky == true){
+					payout = "$5,000";
+				}
+				else{
+					payout = "$200";
+				}
+			}
+			else if(matches == 3){
+				if(same_lucky == true){
+					payout = "$150";
+				}
+				else{
+					payout = "$20";
+				}
+			}
+			else if(matches == 2){
+				if(same_lucky == true){
+					payout = "$25";
+				}
+				else{
+					payout = "$3";
+				}
+			}
+			else if(matches == 1 && same_lucky == true){
+					payout = "$6";
+				}
+			else if(matches == 0 && same_lucky == true){
+					payout = "$4";
+				}
+			alert("The official numbers are: " + quick_nums + " lucky number: " + lucky_ball);
+			alert("You entered: " + input_nums + " lucky number: " + lucky_in);
+			alert("You win " + payout);
+		}
+		
+		
+</script>
+
+</body>
+</html>
