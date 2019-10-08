@@ -47,8 +47,12 @@
 		<input type="text" id="fiveNums" value="enter 5 numbers">
 		<input type="text" id="lucky" value="enter Lucky Ball #">
 		<input type="button" onclick="readIn()" value="Enter">
+		
+		<p id="out1"></p>
+		<p id="out2"></p>
+		<p id="out3"></p>
+		
 
-	</form>
 	<script language="javascript" type="text/javascript">
 		
 		function readIn()
@@ -142,13 +146,14 @@
 			else if(matches == 0 && same_lucky == true){
 					payout = "$4";
 				}
-			alert("The official numbers are: " + quick_nums + " lucky number: " + lucky_ball);
-			alert("You entered: " + input_nums + " lucky number: " + lucky_in);
-			alert("You win " + payout);
+			document.getElementById("out1").innerHTML = ("The official numbers are: " + quick_nums + ". The lucky number is: " + lucky_ball);
+			document.getElementById("out2").innerHTML =("You entered: " + input_nums + ". The lucky number is: " + lucky_in);
+			document.getElementById("out3").innerHTML =("You win " + payout);
 		}
 		
 		
-</script>
-
+		</script>
+	</form>
+		
 </body>
 </html>
